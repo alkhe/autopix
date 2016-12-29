@@ -27,7 +27,7 @@ function map_image({ buf, height, width }, mapping) {
 	}
 }
 
-function contrast(image) {
+function contrast(image, threshold) {
 	const { buf } = image
 
 	map_image(image, addr => {
@@ -35,7 +35,7 @@ function contrast(image) {
 		const g = buf[addr + 1]
 		const b = buf[addr + 2]
 	
-		const new_cmp = luminance(r, g, b) < 128 ? 0 : 255
+		const new_cmp = luminance(r, g, b) < threshold ? 0 : 255
 
 		buf[addr] = new_cmp
 		buf[addr + 1] = new_cmp

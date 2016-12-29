@@ -5,7 +5,21 @@ const { mouse, click, delay, down, up, drag } = require('./automate')
 
 const args = process.argv.slice(2)
 const file = resolve(args[0])
-const [ox = 150, oy = 150] = args.slice(1, 3).map(x => Number(x))
+
+const opts = {
+	// origin x
+	x: 150,
+	// origin y
+	y: 150,
+	// luminance threshold
+	l: 128
+}
+
+args.slice(1).forEach(a => {
+	const opt = a[0]
+	const val = Number(a.substr(1))
+	opts[opt] = val
+})
 
 function pen_draw(image) {
 	const { buf } = image
@@ -14,7 +28,7 @@ function pen_draw(image) {
 
 	map_image(image, (addr, x, y) => {
 		if (buf[addr] === 0) {
-			mouse(ox + x, oy + y)
+			mouse(opts.x + x, opts.y + y)
 			click()
 
 			if (iterations < 1000) {
@@ -72,16 +86,16 @@ function line_draw(image) {
 
 	groups.forEach(([l, r, y], i) => {
 		delay(i % 2000 === 0 ? 600 : 1)
-		const ry = oy + y
-		mouse(ox + l, ry)
+		const ry = opts.y + y
+		mouse(opts.x + l, ry)
 		down()
-		drag(ox + r, ry)
+		drag(opts.x + r, ry)
 		up()
 	})
 }
 
 read_png(file)
-	.then(contrast)
+	.then(image => contrast(image, opts.l))
 	// .then(image => write_image(image, 'out.png'))
 	// .then(pen_draw)
 	.then(line_draw)
