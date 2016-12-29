@@ -1,0 +1,19 @@
+{
+  "name": "autopix",
+  "version": "0.1.0",
+  "description": "Automate the mouse to draw pixel art from an image.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edge/autopix"
+  },
+  "keywords": [
+    "flockdraw"
+  ],
+  "author": "synchronous",
+  "license": "MIT",
+  "dependencies": {
+    "pngjs": "^3.0.0",
+    "robotjs": "^0.4.5"
+  }
+}
