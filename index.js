@@ -21,6 +21,12 @@ args.slice(1).forEach(a => {
 	opts[opt] = val
 })
 
+function log_next(image) {
+	console.log(`top-left (x, y): (${ opts.x }, ${ opts.y })`)
+	console.log(`bottom-right (x, y): (${ opts.x + image.width }, ${ opts.y + image.height })`)
+	return image
+}
+
 function pen_draw(image) {
 	const { buf } = image
 
@@ -95,6 +101,7 @@ function line_draw(image) {
 }
 
 read_png(file)
+	.then(log_next)
 	.then(image => contrast(image, opts.l))
 	// .then(image => write_image(image, 'out.png'))
 	// .then(pen_draw)
